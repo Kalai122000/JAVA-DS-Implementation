@@ -1,4 +1,17 @@
-INFIX TO POSTFIX Converstion
+INFIX TO POSTFIX Converstion:
+
+------------------------------------------------------------------------------------------
+RULES:
+
+1. Priority Check
+Exponent (^) --> Highest Priority
+* , / --> Next Priority
++ , -  --> Lowest Priority
+
+2. No two operator of same priority cannot stay together into the stack;
+3. Lowest priority cannot be placed before highest priority;
+4. ( ) , [],{} - Pop all the operators inbetween this backets;
+---------------------------------------------------------------------------------------------
 
 import java.util.Stack;
 import java.util.Scanner;
