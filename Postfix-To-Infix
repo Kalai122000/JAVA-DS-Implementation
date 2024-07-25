@@ -1,0 +1,35 @@
+POSTFIX TO INFIX:
+
+import java.util.Stack;
+import java.util.Scanner;
+
+public class Main {
+
+    public static String postfixToInfix(String n) {
+        Stack<String> stack = new Stack<>();
+
+        for (int i = 0; i < n.length(); i++) {
+            char c = n.charAt(i);
+
+            if (Character.isLetterOrDigit(c)) {
+                stack.push(Character.toString(c));
+            } else {
+                String Top1 = stack.pop();
+                String Top2 = stack.pop();
+                String expr = "(" + Top2 + c + Top1 + ")";
+                stack.push(expr);
+            }
+        }
+        return stack.pop();
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        String n = sc.nextLine();
+        String result = postfixToInfix(n);
+        System.out.println(result);
+
+        sc.close();
+    }
+}
