@@ -1,0 +1,72 @@
+import java.util.Scanner;
+
+public class PriorityQueueArray {
+    private static final int size1 = 100;
+    private int[] data;
+    private int[] priority;
+    private int size;
+
+    public PriorityQueueArray() {
+        data = new int[size1];
+        priority = new int[size1];
+        size = 0;
+    }
+
+    public void enqueue(int val, int pri) {
+        if (size == size1) {
+            System.out.println("Full");
+            return;
+        }
+        
+        int i;
+        for (i = size - 1; i >= 0 && priority[i] > pri; i--) {
+            data[i + 1] = data[i];
+            priority[i + 1] = priority[i];
+        }
+        data[i + 1] = val;
+        priority[i + 1] = pri;
+        size++;
+    }
+
+    public void dequeue() {
+        if (size == 0) {
+            System.out.println("Empty");
+            return;
+        }
+        for (int i = 0; i < size - 1; i++) {
+            data[i] = data[i + 1];
+            priority[i] = priority[i + 1];
+        }
+        size--;
+    }
+
+    public void display() {
+        if (size == 0) {
+            System.out.println("Empty");
+            return;
+        }
+        for (int i = 0; i < size; i++) {
+            System.out.print(data[i] + "(Priority: " + priority[i] + ") --> ");
+        }
+        System.out.println("Null");
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        PriorityQueueArray pq = new PriorityQueueArray();
+
+        pq.enqueue(10, 2);
+        pq.enqueue(20, 0);
+        pq.enqueue(30, 1);
+        pq.enqueue(40, 3);
+
+        System.out.println("ENQUEUE:");
+        pq.display();
+
+        pq.dequeue();
+        pq.dequeue();
+
+        System.out.println("DEQUEUE:");
+        pq.display();
+    }
+}
