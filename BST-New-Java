@@ -1,4 +1,5 @@
-BINARY SEARCH TREE(Insertion, Traversal (Inorder,Preorder,Postorder), Searching, Level-order Traversal,Height,leafcount,Topview)
+BINARY SEARCH TREE(Insertion, Traversal (Inorder,Preorder,Postorder), Searching, Level-order Traversal,
+Height,leafcount,Topview,delete a node)
 
 import java.util.*;
 
@@ -124,6 +125,34 @@ class Tree {
         }
         return leafCount(root.left) + leafCount(root.right);
     }
+    private Node findMin(Node root) {
+        while (root.left != null) {
+            root = root.left;
+        }
+        return root;
+    }
+    public Node delete(Node root, int key) {
+        if (root == null) {
+            return null;
+        }
+        if (key < root.data) {
+            root.left = delete(root.left, key);
+        } else if (key > root.data) {
+            root.right = delete(root.right, key);
+        } else {
+            if (root.left == null) {
+                return root.right;
+            } else if (root.right == null) {
+                return root.left;
+            }
+            Node temp = findMin(root.right);
+            root.data = temp.data;
+
+            root.right = delete(root.right, temp.data);
+        }
+        return root;
+    }
+
     public static void main(String[] args) {
         Tree T1 = new Tree();
         Scanner sc = new Scanner(System.in);
@@ -137,7 +166,6 @@ class Tree {
             }
             T1.insert(root, data);
         }
-        
         System.out.println("PREORDER:");
         T1.preorder(root);
         System.out.println("\nINORDER:");
@@ -156,12 +184,12 @@ class Tree {
         } else {
             System.out.println("Element Not Found");
         }
-
         System.out.println("TOP VIEW:");
         T1.topview(root);
         System.out.println("\nLEAF COUNT:");
         System.out.println(T1.leafCount(root));
         
-        
+        T1.delete(root,44);
+        T1.preorder(root);
     }
 }
