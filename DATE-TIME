@@ -1,0 +1,171 @@
+import java.time.LocalDate;
+import java.time.LocalTime;
+
+public class addingandsubtracting {
+    public static void main(String[] args) {
+        LocalDate today = LocalDate.now();
+        System.out.println("Today : " + today);
+        System.out.println("Tomorrow : " + today.plusDays(4));
+        System.out.println("Yesterday : " + today.minusDays(1));
+
+        LocalTime current = LocalTime.now();
+        System.out.println("Current time : " + current);
+        System.out.println("Before 5 hours : " + current.minusHours(5));
+        System.out.println("After 3 hours : " + current.plusHours(3));
+    }
+}
+------------------------------------------------------------------------------------------------------------------------------------------------------
+
+import java.time.*;
+import java.time.format.DateTimeFormatter;
+
+class datetime
+{
+    public static void main(String[] args) {
+//        LocalDate d = LocalDate.now();
+//        System.out.print("Date : ");
+//        System.out.println(d);
+//
+//        LocalTime t = LocalTime.now();
+//        System.out.print("Time : ");
+//        System.out.println(t);
+//
+//        LocalDate leap = LocalDate.of(2023,Month.FEBRUARY,28);
+//        System.out.println(leap);
+//
+//        LocalDate month = LocalDate.of(2024,Month.SEPTEMBER,30);
+//        System.out.println(month);
+//
+//        LocalTime ct = LocalTime.of(10,30,15);
+//        System.out.println(ct);
+//
+//        LocalTime z = LocalTime.now(ZoneId.of("Asia/Singapore"));
+//        System.out.println(z);
+//
+//        Instant i = Instant.now();
+//        System.out.println(i);
+//        for(String i : ZoneId.getAvailableZoneIds())
+//        {
+//            System.out.println(i);
+//        }
+
+        LocalDateTime dt = LocalDateTime.now();
+        System.out.println(dt);
+
+        DateTimeFormatter f = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+        String format = dt.format(f);
+        System.out.println(format);
+
+        LocalDateTime sdt = dt.withDayOfMonth(26).withYear(2016);
+        System.out.println(sdt);
+    }
+}
+--------------------------------------------------------------------------------------------------------------------------------------
+
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.Month;
+
+public class dayandmonth {
+    public static void main(String[] args) {
+        LocalDate d = LocalDate.of(2025,02,14);
+        System.out.println("Date : " + d);
+
+        DayOfWeek d1 = d.getDayOfWeek();
+        System.out.println("Day : " + d1);
+
+        Month m = d.getMonth();
+        System.out.println("Month : " + m);
+    }
+}
+--------------------------------------------------------------------------------------------------------------------------
+
+import java.time.LocalDate;
+
+public class example1 {
+    public static void main(String[] args) {
+        LocalDate d= LocalDate.now();
+        System.out.println("today : " + d);
+        LocalDate yesterday = d.minusDays(1);
+        System.out.println("yesterday: " + yesterday);
+        LocalDate tom = d.plusDays(1);
+        System.out.println("tomorrow: " + tom);
+        LocalDate march = LocalDate.of(2025,3,31);
+        System.out.println("March : " +  march);
+        LocalDate dec = LocalDate.of(2025,12,31);
+        System.out.println("dec : " + dec);
+        System.out.println("leap year : + "+ dec.isLeapYear());
+        System.out.println(d.isLeapYear());
+    }
+}
+-------------------------------------------------------------------------------------------------------------------------
+
+import java.time.LocalTime;
+
+public class example2 {
+    public static void main(String[] args) {
+        LocalTime t = LocalTime.now();
+        System.out.println("current time: " + t);
+        LocalTime minushours = t.minusHours(3);
+        System.out.println("2 hours before : " + minushours);
+        LocalTime minusminutes = t.minusMinutes(30);
+        System.out.println("30 mins before : " + minusminutes);
+        LocalTime eve = LocalTime.of(5,30,20);
+        System.out.println("evening : " + eve);
+    }
+}
+----------------------------------------------------------------------------------------------------------------------
+
+
+import java.time.LocalTime;
+import java.time.ZoneId;
+import java.time.Instant;
+
+public class example3 {
+    public static void main(String[] args) {
+        LocalTime lt = LocalTime.now();
+        System.out.println("current time : " + lt);
+
+        Instant i = Instant.now();
+        System.out.println(i);
+
+        for(String val : ZoneId.getAvailableZoneIds())
+        {
+        System.out.println(val);
+        }
+
+        LocalTime zt = LocalTime.now(ZoneId.of("Asia/Singapore"));
+        System.out.println("At Singapore : " + zt);
+    }
+}
+------------------------------------------------------------------------------------------------------------------------
+
+import java.time.LocalTime;
+import java.time.Period;
+import java.time.temporal.ChronoUnit;
+
+public class periodduration {
+    public static void main(String[] args) {
+        LocalTime morning = LocalTime.of(10,30,45);
+        LocalTime evening = LocalTime.of(5,20,32);
+        System.out.println("Morning : " + morning);
+        System.out.println("Evening : " + evening);
+
+        Duration duration = Duration.between(morning,evening);
+        System.out.println("Duration : " + duration);
+
+        LocalDate start = LocalDate.of(2000,3,9);
+        LocalDate end = LocalDate.of(2024,8,15);
+        Period period = Period.between(start,end);
+        System.out.println("Period : " + period);
+
+        LocalDateTime starting = LocalDateTime.of(2004,5,16,8,01);
+        LocalDateTime ending = LocalDateTime.of(2024,8,15,23,17);
+
+        long daysBetween = ChronoUnit.DAYS.between(starting, ending);
+        long HoursBetween1 = ChronoUnit.HOURS.between(starting, ending);
+
+        System.out.println("Days :"+daysBetween);
+        System.out.println("Hours :"+HoursBetween1);
+    }
+}
