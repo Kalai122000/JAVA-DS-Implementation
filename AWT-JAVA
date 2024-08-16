@@ -16,3 +16,43 @@ public class AWT1 extends Frame{
         new AWT1();
     }
 }
+
+==============================================================================================================================
+BASIC CREATION:
+
+import java.awt.*;
+
+public class AWT1{
+    AWT1(){
+        Frame frame = new Frame("KALAI");
+        Label l1 = new Label("email");
+
+        TextField t = new TextField("Enter the name");
+
+        Button b1 = new Button("Click Here");
+
+        TextArea ta = new TextArea("Enter the discription");
+
+        Checkbox c = new Checkbox("Male");
+
+        Choice c1 = new Choice();
+        c1.add("India");
+        c1.add("usa");
+        c1.add("london");
+
+        frame.add(b1);
+        frame.add(l1);
+        frame.add(t);
+        frame.add(ta);
+        frame.add(c);
+        frame.add(c1);
+        
+        frame.setLayout(new FlowLayout());
+        frame.setSize(200,200);
+        frame.setVisible(true);
+    }
+    public static void main(String args[]){
+        new AWT1();
+    }
+}
+===============================================================================================================================
