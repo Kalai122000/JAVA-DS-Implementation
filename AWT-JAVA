@@ -1,0 +1,18 @@
+CREATE BUTTON:
+
+import java.awt.*;
+
+public class AWT1 extends Frame{
+    AWT1(){
+        Button b1 = new Button("Click Here");
+
+        add(b1);
+
+        setLayout(new FlowLayout());
+        setSize(100,100);
+        setVisible(true);
+    }
+    public static void main(String args[]){
+        new AWT1();
+    }
+}
