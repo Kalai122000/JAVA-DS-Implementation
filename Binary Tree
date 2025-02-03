@@ -1,0 +1,73 @@
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.Scanner;
+
+class Node {
+    int key;
+    Node left, right;
+
+    public Node(int item) {
+        key = item;
+        left = right = null;
+    }
+}
+
+class BinaryTree {
+    Node root;
+
+  
+    public void traverseTree(Node node) {
+        if (node != null) {
+            traverseTree(node.left);
+            System.out.print(" " + node.key);
+            traverseTree(node.right);
+        }
+    }
+
+    public Node buildTree(int[] values) {
+        if (values.length == 0) return null; 
+
+        Queue<Node> queue = new LinkedList<>();
+        root = new Node(values[0]); 
+        queue.add(root);
+
+        int index = 1;
+        while (!queue.isEmpty() && index < values.length) {
+            Node current = queue.poll();
+
+            if (index < values.length && values[index] != -1) {
+                current.left = new Node(values[index]);
+                queue.add(current.left);
+            }
+            index++;
+
+            if (index < values.length && values[index] != -1) {
+                current.right = new Node(values[index]);
+                queue.add(current.right);
+            }
+            index++;
+        }
+
+        return root;
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Enter the sequence of values for the binary tree (separated by spaces, use -1 for null):");
+        String input = scanner.nextLine();
+        String[] valuesStr = input.split(" ");
+        int[] values = new int[valuesStr.length];
+
+        for (int i = 0; i < valuesStr.length; i++) {
+            values[i] = Integer.parseInt(valuesStr[i]);
+        }
+        BinaryTree tree = new BinaryTree();
+        tree.buildTree(values);
+
+        System.out.print("\nBinary Tree (In-order traversal): ");
+        tree.traverseTree(tree.root);
+
+        scanner.close();
+    }
+}
