@@ -1,0 +1,99 @@
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Stack;
+
+class TrieNode {
+    Map<Character, TrieNode> child;
+    boolean end;
+
+    public TrieNode() {
+        child = new HashMap<>();
+        end = false;
+    }
+}
+
+class Trie {
+    private TrieNode root;
+
+    public Trie() {
+        root = new TrieNode();
+    }
+
+    public void insert(String word) {
+        TrieNode currNode = root;
+        for (char ch : word.toCharArray()) {
+            currNode.child.putIfAbsent(ch, new TrieNode());
+            currNode = currNode.child.get(ch);
+        }
+        currNode.end = true;
+    }
+
+    public boolean search(String word) {
+        TrieNode currNode = root;
+        for (char ch : word.toCharArray()) {
+            if (!currNode.child.containsKey(ch)) {
+                return false;
+            }
+            currNode = currNode.child.get(ch);
+        }
+        return currNode.end;
+    }
+
+    public void remove(String word) {
+        if (!search(word)) {
+            System.out.println("Word not found");
+            return;
+        }
+
+        TrieNode currNode = root;
+        Stack<Pair<TrieNode, Character>> stack = new Stack<>();
+
+        for (char ch : word.toCharArray()) {
+            stack.push(new Pair<>(currNode, ch));
+            currNode = currNode.child.get(ch);
+        }
+        currNode.end = false;
+
+        while (!stack.isEmpty()) {
+            Pair<TrieNode, Character> pair = stack.pop();
+            TrieNode node = pair.getKey();
+            char ch = pair.getValue();
+            TrieNode childNode = node.child.get(ch);
+
+            if (childNode.child.isEmpty() && !childNode.end) {
+                node.child.remove(ch);
+            } else {
+                break;
+            }
+        }
+        System.out.println("Word removed");
+    }
+
+    public static void main(String[] args) {
+        Trie t1 = new Trie();
+        t1.insert("APPLE");
+        t1.insert("APPLICATION");
+        t1.insert("APP");
+        System.out.println(t1.search("APPLE")); 
+        t1.remove("APPLE");
+        System.out.println(t1.search("APPLE"));
+    }
+}
+
+class Pair<K, V> {
+    private K key;
+    private V value;
+
+    public Pair(K key, V value) {
+        this.key = key;
+        this.value = value;
+    }
+
+    public K getKey() {
+        return key;
+    }
+
+    public V getValue() {
+        return value;
+    }
+}
