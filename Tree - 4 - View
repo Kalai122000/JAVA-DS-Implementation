@@ -1,0 +1,158 @@
+import java.util.*;
+class Node{
+    int data;
+    Node left;
+    Node right;
+    int height;
+    int hd;
+    
+    public Node(int d){
+        data = d;
+        left = right = null;
+        height = 0;
+        hd = 0;
+    }
+}
+class Tree{
+    Node create(int data){
+        return new Node(data);
+    }
+    
+    Node insert(Node root, int data){
+        if (root == null){
+            return create(data);
+        }
+        if(data < root.data){
+            root.left = insert(root.left, data);
+        }
+        else{
+            root.right = insert(root.right, data);   
+        }
+        return root;
+    }
+    
+    public void topview(Node root){
+        TreeMap<Integer,Integer> t = new TreeMap<>();
+        Queue<Node> q = new LinkedList<>();
+        
+        q.add(root);
+        while(!q.isEmpty()){
+            Node temp = q.poll();
+            int h = temp.height;
+            
+            if(!t.containsKey(h)){
+                t.put(h,temp.data);
+            }
+            if(temp.left != null){
+                temp.left.height = h-1;
+                q.add(temp.left);
+            }
+            if(temp.right != null){
+                temp.right.height = h+1;
+                q.add(temp.right);
+            }
+        }
+        for(Integer i : t.values()){
+            System.out.print(i+" ");
+        }
+    }
+    
+    public void leftView(Node root) {
+        if (root == null) return;
+        
+        Queue<Node> queue = new LinkedList<>();
+        queue.add(root);
+        
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            for (int i = 0; i < size; i++) {
+                Node current = queue.poll();
+                if (i == 0) { 
+                    System.out.print(current.data + " ");
+                }
+                if (current.left != null) {
+                    queue.add(current.left);
+                }
+                if (current.right != null) {
+                    queue.add(current.right);
+                }
+            }
+        }
+    }
+    
+    public void rightView(Node root) {
+        if (root == null) return;
+        
+        Queue<Node> queue = new LinkedList<>();
+        queue.add(root);
+        
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            for (int i = 0; i < size; i++) {
+                Node current = queue.poll();
+                if (i == size - 1) { 
+                    System.out.print(current.data + " ");
+                }
+                if (current.left != null) {
+                    queue.add(current.left);
+                }
+                if (current.right != null) {
+                    queue.add(current.right);
+                }
+            }
+        }
+    }
+    
+    public void bottomView(Node root) {
+        if (root == null) return;
+        
+        TreeMap<Integer, Integer> map = new TreeMap<>();
+        Queue<Node> queue = new LinkedList<>();
+        root.hd = 0;
+        queue.add(root);
+        
+        while (!queue.isEmpty()) {
+            Node current = queue.poll();
+            int hd = current.hd;
+            
+            map.put(hd, current.data);
+            
+            if (current.left != null) {
+                current.left.hd = hd - 1;
+                queue.add(current.left);
+            }
+            if (current.right != null) {
+                current.right.hd = hd + 1;
+                queue.add(current.right);
+            }
+        }
+        
+        for (int value : map.values()) {
+            System.out.print(value + " ");
+        }
+    }
+    
+    public static void main(String args[]){
+        Tree t1 = new Tree();
+        Node root = t1.create(10);
+        
+        t1.insert(root,20);
+        t1.insert(root,25);
+        t1.insert(root,15);
+        t1.insert(root,7);
+        t1.insert(root,5);
+        t1.insert(root,9);
+        
+        System.out.println("\nTop View:");
+        t1.topview(root);
+        
+        System.out.println("\nLeft View:");
+        t1.leftView(root);
+        
+        System.out.println("\nRight View:");
+        t1.rightView(root);
+        
+        System.out.println("\nBottom View:");
+        t1.bottomView(root);
+    }
+}
