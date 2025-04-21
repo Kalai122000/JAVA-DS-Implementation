@@ -1,0 +1,112 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Node {
+    int data;
+    struct Node* next;
+    struct Node* prev;
+};
+
+struct Node* front = NULL;
+struct Node* rear = NULL;
+
+void insertFront(int data) {
+    struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+    newNode->data = data;
+    newNode->prev = NULL;
+    if (front == NULL) {
+        newNode->next = NULL;
+        front = rear = newNode;
+    } else {
+        newNode->next = front;
+        front->prev = newNode;
+        front = newNode;
+    }
+}
+
+void insertRear(int data) {
+    struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+    newNode->data = data;
+    newNode->next = NULL;
+    if (rear == NULL) {
+        newNode->prev = NULL;
+        front = rear = newNode;
+    } else {
+        newNode->prev = rear;
+        rear->next = newNode;
+        rear = newNode;
+    }
+}
+
+void deleteFront() {
+    if (front == NULL) {
+        printf(" is empty\n");
+        return;
+    }
+    struct Node* temp = front;
+    if (front == rear) {
+        front = rear = NULL;
+    } else {
+        printf("\nDeleted Element at Front : %d",front->data);
+        front = front->next;
+        front->prev = NULL;
+    }
+    free(temp);
+}
+
+void deleteRear() {
+    if (rear == NULL) {
+        printf("Deque is empty\n");
+        return;
+    }
+    struct Node* temp = rear;
+    if (front == rear) {
+        front = rear = NULL;
+    } else {
+        printf("\nDeleted Element at Rear : %d",front->data);
+        rear = rear->prev;
+        rear->next = NULL;
+    }
+    free(temp);
+}
+
+void display() {
+    if (front == NULL) {
+        printf("Queue is empty\n");
+        return;
+    }
+    struct Node* temp = front;
+    
+    while (temp != NULL) {
+        printf("%d -> ", temp->data);
+        temp = temp->next;
+    }
+    printf("NULL");
+}
+
+int main() {
+    int n ;
+    scanf("%d",&n);
+    for(int i=0;i<n;i++){
+        int data;
+        scanf("%d",&data);
+        insertFront(data);
+    }
+    printf("Double Ended Queue after insertion front:\n");
+    display();
+    printf("\n");
+    int k;
+    scanf("%d",&k);
+    for(int i = 0;i<k;i++){
+        int data;
+        scanf("%d",&data);
+        insertRear(data);
+    }
+    printf("Double Ended Queue after insertion rear:\n");
+    display();
+    deleteFront();
+    deleteRear();
+    printf("\n");
+    display();
+    return 0;
+}
